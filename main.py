@@ -1,4 +1,5 @@
 import selenium
+import time
 from selenium import webdriver
 from selenium.webdriver.common import options
 
@@ -18,9 +19,16 @@ def get_driver():
   driver.get("http://automated.pythonanywhere.com")
   return driver
 
+def clean_text(text):
+  """Extract only the temperature from text"""
+  output = float(text.split(": ")[1]) # spliting when there's a space
+  return output
+
 def main():
   driver = get_driver()
-  element = driver.find_element(by="xpath",value="/html/body/div[1]/div/h1[1]")
+  time.sleep(2) # Waiting for the page to load for 2 seconds
+  element = driver.find_element(by="xpath",value="/html/body/div[1]/div/h1[2]") # Finding the element using inspect
   return element.text
 
 print(main())
+print(clean_text(main()))
